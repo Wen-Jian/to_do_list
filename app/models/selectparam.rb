@@ -1,0 +1,2 @@
+class Selectparam < ApplicationRecord
+end

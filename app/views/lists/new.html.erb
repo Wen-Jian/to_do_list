@@ -1,0 +1,20 @@
+
+<%= form_for @list, :url => lists_path, :method => :post do |f| %>
+	<div class = "form form-control">
+		<%= f.label :title %>
+		<%= f.text_field :title %>
+	</div>
+	<div class = "form form-control">
+		<%= f.label :due_date %>
+		<%= f.text_field :due %>
+	</div>
+	<div class = "form form-control">
+		<%= f.label :notes %>
+		<%= f.text_area :notes %>
+	</div>
+	<div>
+		<a href= <%= lists_path %>><button>cancel</button></a>
+		<%= f.submit "Creat" %>
+	</div>
+<% end %>	
+

@@ -1,0 +1,51 @@
+<table>
+	<% if @lists.count == 0 %>
+		<tr>
+			<th>There is nothing in list</th>
+		</tr>
+
+		<tr>
+			<td>
+			<%= link_to 'Make a new notes', new_list_path %>
+			</td>
+		</tr>
+	<% else %>
+		<tr>
+			<th>title</th>
+			<th>due_date</th>
+			<th>status</th>
+		</tr>
+		<% @lists.each do |l|%>
+			<tr>
+				<td><%= l.title %></td>
+				<td><%= l.due %></td>
+				<td>
+					<a href= <%= list_path(l) %>> 
+							0%
+					</a>
+				</td>
+				
+			</tr>
+		<% end %>
+		<tr>
+			<td><a href= <%= new_list_path %>><button>make a new notes</button></a></td>
+		</tr>
+	<% end %>
+</table>
+<% if @select.params == 0 %>
+	<hr>
+<%elsif  @list.notes.count != 0 %>
+	<% @list.notes.each do |l|%> 
+		<table>
+			<tr>
+			
+				<td><%= l %></td>
+			
+
+			</tr>
+		</table>
+	<% end %>
+<% else %>
+	<hr>
+	<h1>There is no notes please edit it!</h1>
+<% end %>
