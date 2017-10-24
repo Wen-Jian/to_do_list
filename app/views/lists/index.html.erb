@@ -14,6 +14,7 @@
 			<th>title</th>
 			<th>due_date</th>
 			<th>status</th>
+			
 		</tr>
 		<% @lists.each do |l|%>
 			<tr>
@@ -24,6 +25,7 @@
 							0%
 					</a>
 				</td>
+
 				
 			</tr>
 		<% end %>
@@ -34,18 +36,34 @@
 </table>
 <% if @select.params == 0 %>
 	<hr>
-<%elsif  @list.notes.count != 0 %>
-	<% @list.notes.each do |l|%> 
-		<table>
-			<tr>
-			
-				<td><%= l %></td>
-			
+<%elsif @list.notes != nil %>
+	<hr>
 
+	<table>
+		<% e = @list.notes %>
+		<% e.each do |f| %>
+			<tr>
+
+				<td><%= f %></td>	
+		
 			</tr>
-		</table>
-	<% end %>
+		<% end %>
+		<% if @time.year <= (@list.due).year %>
+		<tr>
+			<td>
+
+				<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
+				
+				<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+	
 <% else %>
 	<hr>
 	<h1>There is no notes please edit it!</h1>
 <% end %>
+
+<h1><%= @time.to_a %></h1>
+<h1><%= (@list.due).year %></h1>
