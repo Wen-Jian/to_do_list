@@ -20,9 +20,8 @@ class ListsController < ApplicationController
 	end
 	def create
 		
-		e = params[:list]
-		e[:notes] = e[:notes].split(%r{\r\n*})
-		
+		notes_to_array
+		status_init
 		@list = List.new(list_params)
 
 
@@ -43,10 +42,15 @@ class ListsController < ApplicationController
 		
 	end
 	def edit
+		@list[:notes] = (@list[:notes]).join("\r\n")
 		
 	end
 	def update
+
+		notes_to_array
+		debugg
 		if @list.update_attributes(list_params)
+			
 			redirect_to lists_path
 		else
 			render :action => :edit
@@ -68,7 +72,7 @@ class ListsController < ApplicationController
 
 	def list_params
 
-		params.require(:list).permit(:title, :due, :notes => [])
+		params.require(:list).permit(:title, :due, :notes => [], :status => [])
 		
 
 	end
@@ -78,6 +82,16 @@ class ListsController < ApplicationController
 		
 	end
 
+	def notes_to_array
+		e = params[:list]
+		e[:notes] = e[:notes].split(%r{\r\n*})
+				
+	end
+	def status_init
 
+		e = params[:list]
+		e[:status] = Array.new((e[:notes]).count, false)
+		
+	end
 end
 

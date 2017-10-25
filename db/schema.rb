@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022070221) do
+ActiveRecord::Schema.define(version: 20171025050749) do
 
 # Could not dump table "lists" because of following StandardError
-#   Unknown type 'serialize' for column 'notes'
+#   Unknown type '' for column 'notes'
 
   create_table "selectparams", force: :cascade do |t|
     t.integer "params"

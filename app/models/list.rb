@@ -1,3 +1,4 @@
 class List < ApplicationRecord
-	serialize :notes
+	serialize :notes 
+	serialize :status
 end

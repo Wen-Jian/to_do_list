@@ -1,3 +1,4 @@
+<div class = "list_show container">
 <table>
 	<% if @lists.count == 0 %>
 		<tr>
@@ -34,36 +35,76 @@
 		</tr>
 	<% end %>
 </table>
-<% if @select.params == 0 %>
-	<hr>
-<%elsif @list.notes != nil %>
-	<hr>
+<div class="notes_list">
+	<% if @select.params == 0 %>
+		<hr>
+	<%elsif @list.notes != nil %>
+		<hr>
 
-	<table>
-		<% e = @list.notes %>
-		<% e.each do |f| %>
+		<table>
 			<tr>
-
-				<td><%= f %></td>	
-		
-			</tr>
-		<% end %>
-		<% if @time.year <= (@list.due).year %>
-		<tr>
-			<td>
-
-				<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
+				<th>Notes</th>
 				
-				<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
-			</td>
-		</tr>
-		<% end %>
-	</table>
-	
-<% else %>
-	<hr>
-	<h1>There is no notes please edit it!</h1>
-<% end %>
+			</tr>
+			<% e = @list.notes %>
+			<% e.each do |f| %>
+				<tr>
 
-<h1><%= @time.to_a %></h1>
-<h1><%= (@list.due).year %></h1>
+					<td><%= f %></td>
+					<td>
+						<input type = "checkbox">
+					</td>
+			
+				</tr>
+			<% end %>
+			<% if @time.year <= (@list.due).year %>
+				<% if @time.month <= (@list.due).month %>
+					<% if @time.day <= (@list.due).day %>
+						<tr>
+							<td>
+
+								<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
+								
+								<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
+							</td>
+						</tr>
+					<%else %>
+						<tr>
+							<td>
+								<h2>out of due time !</h2>
+							</td>
+						</tr>
+					<% end %>
+				<%else %>
+					<tr>
+						<td>
+							<h2>out of due time !</h2>
+						</td>
+					</tr>
+				<% end %>
+			<%else %>
+				<tr>
+					<td>
+						<h2>out of due time !</h2>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+		
+	<% else %>
+		<hr>
+		<h1>There is no notes please edit it!</h1>
+	<% end %>
+</div>
+
+<div class="status_form">
+	<form action = <%= list_path(@list)%> method = "post">
+		<label for = "status">stasus</label>
+		<% 1..(@list.notes).count do %>
+		<input type="checkbox" name="status">
+		<% end %>
+		<button type="submit">check</button>
+	</form>
+	
+</div>
+
