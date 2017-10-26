@@ -1,19 +1,27 @@
-<%= form_for @list, :url => {:controller => :lists, :action => :update, :method => :patch} do |f| %>
-<div class="form-group form-control">
-	<%= f.label :title %>
-	<%= f.text_field :title %>	
+<div class="container form">
+	<%= form_for @list, :url => {:controller => :lists, :action => :update, :method => :patch} do |f| %>
+	<div class="form-group ">
+		<%= f.label :title %>
+		<%= f.text_field :title, class: "form-control" %>	
+	</div>
+	<div class="form-group">
+		<%= f.label :due %>
+		<%= f.text_field :due, class: "form-control" %>
+	</div>
+	<div class="form-group">
+		
+		<%= f.label :notes %>
+	
+		<%= f.text_area :notes, class: "form-control" %>
+
+	</div>
+	<div class=" form">
+		<a href=<%=lists_path %>><button>cancel</button></a>
+		
+		<%= f.submit "Update", class:"float-right" %>
+	</div>
+	<% end %>
 </div>
-<div class="form-group form-control">
-	<%= f.label :due %>
-	<%= f.text_field :due %>
-</div>
-<div class="form-group form-control">
-	<%= f.label :notes %>
-	<%= f.text_area :notes %>
-</div>
-<%= f.submit "Update" %>
-<a href=<%=lists_path %>><button>cancel</button></a>
-<% end %>
 
 <% if @list.errors.present? %>
 <ul>
@@ -24,3 +32,5 @@
 	<% end %>
 </ul>
 <% end %>
+
+

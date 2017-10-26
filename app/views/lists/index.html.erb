@@ -1,15 +1,20 @@
-<div class = "list_show container">
-<table>
+<div id = "banner" class="container">
+	<div id = "left" class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		<h1>To do List !</h1>
+	</div>
+	<div id = "right" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+		<%= link_to 'Make a new notes', new_list_path %>
+	</div>
+</div>
+
+<div class = "container list-show">
+<table class="table-striped col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<% if @lists.count == 0 %>
 		<tr>
 			<th>There is nothing in list</th>
 		</tr>
 
-		<tr>
-			<td>
-			<%= link_to 'Make a new notes', new_list_path %>
-			</td>
-		</tr>
+		
 	<% else %>
 		<tr>
 			<th>title</th>
@@ -35,39 +40,47 @@
 		</tr>
 	<% end %>
 </table>
-<div class="notes_list">
-	<% if @select.params == 0 %>
-		<hr>
-	<%elsif @list.notes != nil %>
-		<hr>
+<div class="container2">
+	<div class="notes_list ">
+		<% if @select.params == 0 %>
+			<hr>
+		<%elsif @list.notes != nil %>
+			<hr>
 
-		<table>
-			<tr>
-				<th>Notes</th>
-				
-			</tr>
-			<% e = @list.notes %>
-			<% e.each do |f| %>
+			<table class="table-striped notes_list col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<tr>
-
-					<td><%= f %></td>
-					<td>
-						<input type = "checkbox">
-					</td>
-			
+					<th>Notes</th>
+					
 				</tr>
-			<% end %>
-			<% if @time.year <= (@list.due).year %>
-				<% if @time.month <= (@list.due).month %>
-					<% if @time.day <= (@list.due).day %>
-						<tr>
-							<td>
+				<% e = @list.notes %>
+				<% e.each do |f| %>
+					<tr>
 
-								<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
-								
-								<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
-							</td>
-						</tr>
+						<td><%= f %></td>
+						<td>
+							<input type = "checkbox">
+						</td>
+				
+					</tr>
+				<% end %>
+				<% if @time.year <= (@list.due).year %>
+					<% if @time.month <= (@list.due).month %>
+						<% if @time.day <= (@list.due).day %>
+							<tr>
+								<td>
+
+									<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
+									
+									<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
+								</td>
+							</tr>
+						<%else %>
+							<tr>
+								<td>
+									<h2>out of due time !</h2>
+								</td>
+							</tr>
+						<% end %>
 					<%else %>
 						<tr>
 							<td>
@@ -82,29 +95,19 @@
 						</td>
 					</tr>
 				<% end %>
-			<%else %>
-				<tr>
-					<td>
-						<h2>out of due time !</h2>
-					</td>
-				</tr>
-			<% end %>
-		</table>
-		
-	<% else %>
-		<hr>
-		<h1>There is no notes please edit it!</h1>
-	<% end %>
+			</table>
+			
+		<% else %>
+			<hr>
+			<h1>There is no notes please edit it!</h1>
+		<% end %>
+	</div>
 </div>
 
-<div class="status_form">
-	<form action = <%= list_path(@list)%> method = "post">
-		<label for = "status">stasus</label>
-		<% 1..(@list.notes).count do %>
-		<input type="checkbox" name="status">
-		<% end %>
-		<button type="submit">check</button>
-	</form>
+
+
+
+
 	
-</div>
+
 
