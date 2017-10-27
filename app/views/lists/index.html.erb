@@ -1,9 +1,15 @@
-<div id = "banner" class="container">
-	<div id = "left" class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
-		<h1>To do List !</h1>
+<div id = "banner" class="container navbar-fixed-top">
+	<div id = "left" class=" col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		<div class="logo">
+			<h1>To do List !</h1>
+		</div>
+		
 	</div>
-	<div id = "right" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-		<%= link_to 'Make a new notes', new_list_path %>
+	<div id = "right" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		<div class="make-new-button">
+			<%= link_to 'Make a new notes', new_list_path %>
+		</div>
+		
 	</div>
 </div>
 
@@ -30,17 +36,18 @@
 					<a href= <%= list_path(l) %>> 
 							0%
 					</a>
+
 				</td>
 
 				
 			</tr>
 		<% end %>
-		<tr>
-			<td><a href= <%= new_list_path %>><button>make a new notes</button></a></td>
-		</tr>
+		
 	<% end %>
 </table>
-<div class="container2">
+</div>
+
+<div class="container">
 	<div class="notes_list ">
 		<% if @select.params == 0 %>
 			<hr>
@@ -63,31 +70,17 @@
 				
 					</tr>
 				<% end %>
-				<% if @time.year <= (@list.due).year %>
-					<% if @time.month <= (@list.due).month %>
-						<% if @time.day <= (@list.due).day %>
-							<tr>
-								<td>
+				
+				
+				<% if @sum > 0 %>
 
-									<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
+					<tr>
+						<td>
+							<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
 									
-									<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
+							<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
 								</td>
 							</tr>
-						<%else %>
-							<tr>
-								<td>
-									<h2>out of due time !</h2>
-								</td>
-							</tr>
-						<% end %>
-					<%else %>
-						<tr>
-							<td>
-								<h2>out of due time !</h2>
-							</td>
-						</tr>
-					<% end %>
 				<%else %>
 					<tr>
 						<td>
@@ -95,6 +88,7 @@
 						</td>
 					</tr>
 				<% end %>
+				
 			</table>
 			
 		<% else %>

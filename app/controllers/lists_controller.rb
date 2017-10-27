@@ -2,7 +2,7 @@ class ListsController < ApplicationController
 	before_action :set_list, :only => [:edit, :update, :destroy]
 	def index
 		@time = Time.now
-		@lists = List.all
+		@lists = List.order("due ASC")
 		@select = Selectparam.find(1)
 		if @select[:params] != 0 
 			if List.find(@select[:params])!= nil
@@ -11,6 +11,7 @@ class ListsController < ApplicationController
 				@list = nil
 			end
 		end
+		@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
 	end
 	def new
 
@@ -22,9 +23,10 @@ class ListsController < ApplicationController
 		
 		notes_to_array
 		status_init
+
 		@list = List.new(list_params)
 
-
+		
 		
 		if @list.save 
 			redirect_to lists_path
@@ -48,7 +50,7 @@ class ListsController < ApplicationController
 	def update
 
 		notes_to_array
-		debugg
+		
 		if @list.update_attributes(list_params)
 			
 			redirect_to lists_path
@@ -72,7 +74,7 @@ class ListsController < ApplicationController
 
 	def list_params
 
-		params.require(:list).permit(:title, :due, :notes => [], :status => [])
+		params.require(:list).permit(:title, {:due => :date}, {:notes => []}, {:status => []})
 		
 
 	end

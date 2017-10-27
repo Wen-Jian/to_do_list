@@ -1,2 +1,55 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+#banner {
+	width:100%;
+	padding-left:0px;
+	padding-right: 0px;
+	position:fixed;
+	top:0px;
+	left:0px;
+	background-color:black;
+}
+#right {
+	
+	text-align:right;
+	height:100%;
+	padding-top:49px;
+
+}
+#left {
+	
+	padding-left:0px;
+	margin-left:0px;
+
+}
+.make-new-button{
+	background-color:gray;
+	border-radius:5px;
+	text-align:center;
+	float:right;
+	padding: 0 5px;
+
+
+}
+.make-new-button a {
+	color:white;
+}
+.logo{
+	width:200px;
+	color:white;
+}
+hr {
+	display:block;
+}
+.list-show{
+	padding-top:50px;
+}
+table{
+	font-size:20px
+}
+td{
+	padding:10px 0; 
+}
+body{
+	padding-top:70px;
+}
