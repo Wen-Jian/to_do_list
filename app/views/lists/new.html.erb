@@ -5,7 +5,7 @@
 		<%= f.text_field :title, class: "form-control" %>
 	</div>
 	<div class = "form-group">
-		<%= f.label :due_date %>
+		<%= f.label :due %>
 		<%= f.text_field :due, class: "form-control" %>
 	</div>
 	<div class = "form-group">
@@ -19,5 +19,12 @@
 	</div>
 <% end %>	
 </div>
+<% if @list.errors.present? %>
+	<ul>
+		<% @list.errors.each do |error, message| %>
+		<li> <%= "#{error.capitalize} #{message}"%></li>
+		<% end %>
+	</ul>
+<% end %>
 
 

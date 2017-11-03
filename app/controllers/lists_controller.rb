@@ -7,6 +7,7 @@ class ListsController < ApplicationController
 		if @select[:params] != 0 
 			if List.find(@select[:params])!= nil
 				@list = List.find(@select[:params])
+
 			else
 				@list = nil
 			end
@@ -23,7 +24,7 @@ class ListsController < ApplicationController
 		
 		notes_to_array
 		status_init
-
+		
 		@list = List.new(list_params)
 
 		
@@ -48,16 +49,41 @@ class ListsController < ApplicationController
 		
 	end
 	def update
-
-		notes_to_array
 		
-		if @list.update_attributes(list_params)
+		if params[:commit] == "Check"
 			
-			redirect_to lists_path
+			if 	params[:status] != nil			
+				
+				
+				(params[:status]).each do |p|
+
+					
+					(@list.status)[p.to_i] = true
+					
+				end	
+				@list.save
+				redirect_to lists_path
+
+
+					
+				
+
+			end	
+			
+			
+			
+
 		else
-			render :action => :edit
+			notes_to_array
+			
+			if @list.update_attributes(list_params)
+			
+				redirect_to lists_path
+			else
+				render :action => :edit
+			end
 		end
-		
+		debugg
 	end
 
 	def destroy
@@ -74,7 +100,7 @@ class ListsController < ApplicationController
 
 	def list_params
 
-		params.require(:list).permit(:title, {:due => :date}, {:notes => []}, {:status => []})
+		params.require(:list).permit(:title, :due, :notes => [], :status => [])
 		
 
 	end
@@ -93,6 +119,10 @@ class ListsController < ApplicationController
 
 		e = params[:list]
 		e[:status] = Array.new((e[:notes]).count, false)
+		
+	end
+	def status_params
+
 		
 	end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171025050749) do
+ActiveRecord::Schema.define(version: 20171031070130) do
 
 # Could not dump table "lists" because of following StandardError
 #   Unknown type '' for column 'notes'

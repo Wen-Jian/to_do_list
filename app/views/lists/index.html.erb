@@ -81,40 +81,36 @@
 <div class="container">
 	<div id = "status-check-box">
 		<%= form_for @list do |f| %>
-			<%= f.label :title %>
-			<div class="form-control">				
-				<%= f.label @list.title %>
-			</div>
-			<%= f.label :due %>
-			<div class="form-control">				
-				<%= f.label @list.due %>
-			</div>
+			
 			<%= f.label :notes %>
-			<%(@list.notes).each do |i|%>
+			<%for i in 0..((@list.notes).count-1) %>
 					
-				<div class="form-group">
-					<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 padding-left">
-						<%= f.label i %>
-					</div>
-					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 padding-left">
-						<%= f.check_box :status %>
-					</div>
-				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-left">
+					<input type="checkbox" name ="status[]" value = <%=i%>><%=@list.notes[i]%>
 						
-					
-				<% end %>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-btn-right">
+				</div>
+				
+
+			<% end %>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-btn-right">
 					<%= f.submit "Check" %>
-				</div>			
-			<div class="should-hidden">
-				<%= f.text_field :due %>
-				<%= f.text_field :title %>
-				<%= f.text_area :notes %>
-			</div>	
+			</div>			
+			
 			
 		<% end %>
 	</div>
 </div>
+<%= @list.status%>
+
+<% if @list.errors.present? %>
+<ul>
+	<% @list.errors.each do |error, message| %>
+	<li>
+		<%= "#{error.capitalize} #{message}" %>
+	</li>
+	<% end %>
+</ul>
+<% end %>
 
 
 

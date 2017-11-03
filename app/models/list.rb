@@ -1,5 +1,5 @@
 class List < ApplicationRecord
 	serialize :notes 
-	serialize :status
-	validates_presence_of :title, :due, :notes, :status
+	serialize :status	
+	validates_presence_of :title, :due, :notes
 end
