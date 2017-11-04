@@ -28,15 +28,17 @@
 			<th>status</th>
 			
 		</tr>
+		<% a_count = 0 %>
 		<% @lists.each do |l|%>
+			
 			<tr>
 				<td><%= l.title %></td>
 				<td><%= l.due %></td>
 				<td>
 					<a href= <%= list_path(l) %>> 
-							0%
+							<%= @complete_array[a_count]%> %
 					</a>
-
+					<% a_count += 1%>
 				</td>
 
 				
@@ -79,38 +81,35 @@
 		<% end %>
 	</div>
 <div class="container">
-	<div id = "status-check-box">
-		<%= form_for @list do |f| %>
-			
-			<%= f.label :notes %>
-			<%for i in 0..((@list.notes).count-1) %>
-					
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-left">
-					<input type="checkbox" name ="status[]" value = <%=i%>><%=@list.notes[i]%>
-						
-				</div>
+	<% if @list != nil %>
+		<div id = "status-check-box">
+			<%= form_for @list do |f| %>
 				
+				<%= f.label :notes %>
+				<%for i in 0..((@list.notes).count-1) %>
+					
+					<% if @list.status[i] != true %>	
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-left">
+							<input type="checkbox" name ="status[]" value = <%=i%>><%=@list.notes[i]%>
+								
+						</div>
+					<%else %>
+					<p><%= @list.notes[i] %></p>
+					<% end %>
+					
 
+				<% end %>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-btn-right">
+						<%= f.submit "Check" %>
+				</div>			
+				
+				
 			<% end %>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-btn-right">
-					<%= f.submit "Check" %>
-			</div>			
-			
-			
-		<% end %>
-	</div>
-</div>
-<%= @list.status%>
-
-<% if @list.errors.present? %>
-<ul>
-	<% @list.errors.each do |error, message| %>
-	<li>
-		<%= "#{error.capitalize} #{message}" %>
-	</li>
+		</div>
 	<% end %>
-</ul>
-<% end %>
+
+
+</div>
 
 
 

@@ -1,18 +1,36 @@
 class ListsController < ApplicationController
 	before_action :set_list, :only => [:edit, :update, :destroy]
 	def index
+
 		@time = Time.now
 		@lists = List.order("due ASC")
 		@select = Selectparam.find(1)
 		if @select[:params] != 0 
 			if List.find(@select[:params])!= nil
 				@list = List.find(@select[:params])
-
+				@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
 			else
 				@list = nil
 			end
 		end
-		@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
+		
+		@complete_array = []
+		for i in 1..List.count
+			e = List.find(i) 
+			complete_rate = 0.0
+			e[:status].each do |i|
+
+				if i == true
+					complete_rate += 1
+					
+				end
+				
+			end
+
+			complete_rate = (complete_rate / (e[:notes].count)) * 100
+			
+			@complete_array.append(complete_rate)
+		end
 	end
 	def new
 
@@ -30,6 +48,7 @@ class ListsController < ApplicationController
 		
 		
 		if @list.save 
+			@list.save
 			redirect_to lists_path
 		else
 			render :action => :new
@@ -50,28 +69,23 @@ class ListsController < ApplicationController
 	end
 	def update
 		
+		statusarray = Array.new((@list.notes).count, false)
+		
 		if params[:commit] == "Check"
 			
 			if 	params[:status] != nil			
 				
-				
 				(params[:status]).each do |p|
 
-					
-					(@list.status)[p.to_i] = true
-					
-				end	
-				@list.save
-				redirect_to lists_path
+					statusarray[p.to_i] = true
 
+				end
 
-					
+				@list.status = statusarray
 				
-
 			end	
-			
-			
-			
+			@list.save
+			redirect_to lists_path
 
 		else
 			notes_to_array
@@ -83,7 +97,7 @@ class ListsController < ApplicationController
 				render :action => :edit
 			end
 		end
-		debugg
+		
 	end
 
 	def destroy
@@ -118,7 +132,7 @@ class ListsController < ApplicationController
 	def status_init
 
 		e = params[:list]
-		e[:status] = Array.new((e[:notes]).count, false)
+		e[:status] = Array.new((e[:notes]).count, "false")
 		
 	end
 	def status_params
