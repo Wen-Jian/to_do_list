@@ -4,7 +4,13 @@ class ListsController < ApplicationController
 
 		@time = Time.now
 		@lists = List.order("due ASC")
-		@select = Selectparam.find(1)
+		if Selectparam.count == 0
+
+			e = Selectparam.new(params: 0)
+			e.save
+
+		end	
+		@select = Selectparam.first
 		if @select[:params] != 0 
 			if List.find(@select[:params])!= nil
 				@list = List.find(@select[:params])
