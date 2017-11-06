@@ -18,11 +18,11 @@ class ListsController < ApplicationController
 			else
 				@list = nil
 			end
+
 		end
-		
 		@complete_array = []
-		for i in 1..List.count
-			e = List.find(i) 
+		@lists.each do |e|
+			 
 			complete_rate = 0.0
 			e[:status].each do |i|
 
@@ -30,13 +30,14 @@ class ListsController < ApplicationController
 					complete_rate += 1
 					
 				end
-				
+					
 			end
 
-			complete_rate = (complete_rate / (e[:notes].count)) * 100
-			
-			@complete_array.append(complete_rate)
+		complete_rate = (complete_rate / (e[:notes].count)) * 100
+				
+		@complete_array.append(complete_rate)
 		end
+
 	end
 	def new
 
@@ -75,8 +76,7 @@ class ListsController < ApplicationController
 	end
 	def update
 		
-		statusarray = Array.new((@list.notes).count, false)
-		
+		statusarray = @list.status
 		if params[:commit] == "Check"
 			
 			if 	params[:status] != nil			
@@ -86,7 +86,7 @@ class ListsController < ApplicationController
 					statusarray[p.to_i] = true
 
 				end
-
+				
 				@list.status = statusarray
 				
 			end	
@@ -111,7 +111,7 @@ class ListsController < ApplicationController
 		@list.destroy
 		@select = Selectparam.first
 		@select[:params] = 0
-
+		@select.save
 		redirect_to lists_path
 		
 	end

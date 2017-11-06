@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031070130) do
+ActiveRecord::Schema.define(version: 20171106044907) do
 
-# Could not dump table "lists" because of following StandardError
-#   Unknown type '' for column 'notes'
+  create_table "lists", force: :cascade do |t|
+    t.string "title"
+    t.date "due"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
+    t.text "notes"
+  end
 
   create_table "selectparams", force: :cascade do |t|
     t.integer "params"
