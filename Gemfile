@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'coffee-script-source', '1.8.0'
 
- 
+gem 'ruby', '2.4.1' 
 gem 'bootstrap-sass', '~> 3.3.6'
 
 group :development, :test do
