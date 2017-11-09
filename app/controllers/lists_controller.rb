@@ -37,11 +37,11 @@ class ListsController < ApplicationController
 				
 		@complete_array.append(complete_rate)
 		end
-
+		
 	end
 	def new
 
-		@list = List.new
+		#@list = List.new
 
 
 	end
@@ -64,10 +64,13 @@ class ListsController < ApplicationController
 
 	end
 	def show
+		
 		@selectparams = Selectparam.first
-		@selectparams[:params] = params[:id]
+		@selectparams.params = params[:id]
+		
 		@selectparams.save
 		redirect_to lists_path
+
 		
 	end
 	def edit

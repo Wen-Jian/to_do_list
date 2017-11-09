@@ -1,5 +1,5 @@
 <div class="container form">
-<%= form_for @list, :url => lists_path, :method => :post do |f| %>
+<%= form_for :list, :url => lists_path, :method => :post do |f| %>
 	<div class = "form-group">
 		<%= f.label :title %>
 		<%= f.text_field :title, class: "form-control" %>
@@ -19,12 +19,6 @@
 	</div>
 <% end %>	
 </div>
-<% if @list.errors.present? %>
-	<ul>
-		<% @list.errors.each do |error, message| %>
-		<li> <%= "#{error.capitalize} #{message}"%></li>
-		<% end %>
-	</ul>
-<% end %>
+
 
 
