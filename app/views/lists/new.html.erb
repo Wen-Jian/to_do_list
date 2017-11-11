@@ -1,18 +1,4 @@
-<div class="errormessage">
-	<% if @list.errors.present? %>
 
-		<ul>
-			
-			<% @list.errors.each do |error, message| %>
-
-				<li><%= "#{error.capitalize} #{message}"</li>
-
-			<% end -%>
-
-		</ul>
-
-	<% end %>
-</div>
 <div class="container form">
 <%= form_for :list, :url => lists_path, :method => :post do |f| %>
 	<div class = "form-group">
@@ -33,6 +19,21 @@
 		<%= f.submit "Creat" %>
 	</div>
 <% end %>	
+</div>
+<div class="errormessage">
+	<% if @list.errors.present? %>
+
+		<ul>
+			
+			<% @list.errors.each do |error, message| %>
+
+				<li><%= "#{error.capitalize} #{message}" %></li>
+
+			<% end %>
+
+		</ul>
+
+	<% end %>
 </div>
 
 
