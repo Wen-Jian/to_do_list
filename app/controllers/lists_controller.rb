@@ -103,6 +103,7 @@ class ListsController < ApplicationController
 			
 				redirect_to lists_path
 			else
+				@list[:notes] = (@list[:notes]).join("\r\n")
 				render :action => :edit
 			end
 		end
