@@ -1,4 +1,18 @@
+<div class="errormessage">
+	<% if @list.errors.present? %>
 
+		<ul>
+			
+			<% @list.errors.each do |error, message| %>
+
+				<li><%= "#{error.capitalize} #{message}"</li>
+
+			<% end -%>
+
+		</ul>
+
+	<% end %>
+</div>
 
 <div class="container form">
 	<%= form_for @list, :url => {:controller => :lists, :action => :update, :method => :patch} do |f| %>
