@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 
@@ -33,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'coffee-script-source', '1.8.0'
+
 
 
 gem 'bootstrap-sass', '~> 3.3.6'
