@@ -1,9 +1,10 @@
-class ListsController < ApplicationController
+class UserListsController < ApplicationController
+
 	before_action :set_list, :only => [:edit, :update, :destroy]
 	def index
 
 		@time = Time.now
-		@lists = List.order("due ASC")
+		@lists = (List.where(user_id: params[:user_id] )).order("due ASC")
 		if Selectparam.count == 0
 
 			e = Selectparam.new(params: 0)
@@ -12,8 +13,8 @@ class ListsController < ApplicationController
 		end	
 		@select = Selectparam.first
 		if @select[:params] != 0 
-			if List.find(@select[:params])!= nil
-				@list = List.find(@select[:params])
+			if @lists != []
+				@list = List.where(user_id: params[:user_id] )
 				@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
 			else
 				@list = nil
@@ -69,7 +70,7 @@ class ListsController < ApplicationController
 		@selectparams.params = params[:id]
 		
 		@selectparams.save
-		redirect_to lists_path
+		redirect_to :action => :index
 
 		
 	end
@@ -149,4 +150,5 @@ class ListsController < ApplicationController
 		
 	end
 end
+
 

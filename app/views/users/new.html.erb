@@ -1,0 +1,29 @@
+<div class="container form">
+<%= form_for :sign_up, :url => users_path, :method => :post do |f| %>
+	<div class = "form-group">
+		<%= f.label :account %>
+		<%= f.text_field :account, class: "form-control" %>
+	</div>
+	<div class = "form-group">
+		<%= f.label :password %>
+		<%= f.password_field :password, class: "form-control" %>
+	</div>
+	<div class = "form-group">
+		<%= f.label :nickname %>
+		<%= f.text_field :nickname, class: "form-control" %>
+	</div>
+	<div class = "form-group">
+		<%= f.label :sex %>
+		<%= f.select :sex, options_for_select(["Man", "Woman"]), class: "form-control" %>
+	</div>
+	<div class = "form-group">
+		<%= f.label :birth %>
+		<%= f.date_select :birth, option = {:use_two_digit_numbers => true, :start_year => 1980, :end_year => Date.today.year } %>
+	</div>
+
+	<div>
+		<a href= <%= users_path %>><button>cancel</button></a>
+		<%= f.submit "sign_up" %>
+	</div>
+<% end %>	
+</div>

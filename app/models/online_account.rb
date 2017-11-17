@@ -1,0 +1,2 @@
+class OnlineAccount < ApplicationRecord
+end
