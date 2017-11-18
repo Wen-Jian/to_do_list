@@ -99,6 +99,10 @@
 					
 
 				<% end %>
+				<!--上面內容等於
+					<% for i in 0..((@list.notes).count-1) %>
+						<%= f.check_box_tag "status[]",i %><%= (@list.notes)[i] %> 
+					-->
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-btn-right">
 						<%= f.submit "Check" %>
 				</div>			
