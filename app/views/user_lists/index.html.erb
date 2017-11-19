@@ -7,7 +7,7 @@
 	</div>
 	<div id = "right" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 		<div class="make-new-button">
-			<%= link_to 'Make a new notes', new_list_path %>
+			<%= link_to 'Make a new notes', new_user_list_path %>
 		</div>
 		
 	</div>
@@ -35,7 +35,7 @@
 				<td><%= l.title %></td>
 				<td><%= l.due %></td>
 				<td>
-					<a href= <%= list_path(l) %>> 
+					<a href= <%= user_list_path(session[:uid], l.id) %>> 
 							<%= @complete_array[a_count]%> %
 					</a>
 					<% a_count += 1%>
@@ -50,9 +50,8 @@
 </div>
 
 <div class="notes_list container ">
-		<% if @select.params == 0 %>
-			<hr>
-		<%elsif @list.notes != nil %>
+		
+		<% if @list %>
 			<hr>
 
 			<table class="table-striped notes-list col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -60,7 +59,7 @@
 
 					<tr>
 						<td>
-							<a class = "btn" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
+							<a class = "btn btn-primary" href= <%= edit_list_path(@list) %>><button>Edit</button></a>
 									
 							<a class = "btn" href= <%= list_path(@list) %> data-confirm = "Are you sure?" data-method = "delete" rel = "nofollow"><button>delet</button></a>
 								</td>
@@ -83,7 +82,7 @@
 <div class="container">
 	<% if @list != nil %>
 		<div id = "status-check-box">
-			<%= form_for @list do |f| %>
+			<%= form_for @list, :url => user_list_path(session[:uid], session[:select]) do |f| %>
 				
 				<%= f.label :notes %>
 				<%for i in 0..((@list.notes).count-1) %>
@@ -99,10 +98,7 @@
 					
 
 				<% end %>
-				<!--上面內容等於
-					<% for i in 0..((@list.notes).count-1) %>
-						<%= f.check_box_tag "status[]",i %><%= (@list.notes)[i] %> 
-					-->
+				
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-btn-right">
 						<%= f.submit "Check" %>
 				</div>			

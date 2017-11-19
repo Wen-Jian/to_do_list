@@ -1,26 +1,10 @@
 class UserListsController < ApplicationController
 
-	before_action :set_list, :only => [:edit, :update, :destroy]
 	def index
 
 		@time = Time.now
-		@lists = (List.where(user_id: params[:user_id] )).order("due ASC")
-		if Selectparam.count == 0
-
-			e = Selectparam.new(params: 0)
-			e.save
-
-		end	
-		@select = Selectparam.first
-		if @select[:params] != 0 
-			if @lists != []
-				@list = List.where(user_id: params[:user_id] )
-				@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
-			else
-				@list = nil
-			end
-
-		end
+		
+		set_list
 		@complete_array = []
 		@lists.each do |e|
 			 
@@ -37,12 +21,17 @@ class UserListsController < ApplicationController
 		complete_rate = (complete_rate / (e[:notes].count)) * 100
 				
 		@complete_array.append(complete_rate)
+
+		@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
+		
+		
+
 		end
 		
 	end
 	def new
 
-		#@list = List.new
+		@list = List.new
 
 
 	end
@@ -50,14 +39,15 @@ class UserListsController < ApplicationController
 		
 		notes_to_array
 		status_init
+		params[:list][:user_id] = session[:uid]
 		
 		@list = List.new(list_params)
-
+		
 		
 		
 		if @list.save 
 			@list.save
-			redirect_to lists_path
+			redirect_to user_lists_path(session[:uid])
 		else
 			render :action => :new
 		end
@@ -66,10 +56,9 @@ class UserListsController < ApplicationController
 	end
 	def show
 		
-		@selectparams = Selectparam.first
-		@selectparams.params = params[:id]
+		session[:select] = params[:id].to_i - 1
 		
-		@selectparams.save
+		
 		redirect_to :action => :index
 
 		
@@ -124,13 +113,19 @@ class UserListsController < ApplicationController
 
 	def list_params
 
-		params.require(:list).permit(:title, :due, :notes => [], :status => [])
+		params.require(:list).permit(:title, :due, :user_id, :notes => [], :status => [])
 		
 
 	end
 	
 	def set_list
-		@list = List.find(params[:id])
+
+		if session[:select] != nil
+
+			@lists = (List.where(user_id: session[:uid] )).order("due ASC")
+			@list = @lists[(session[:select].to_i)]			
+
+		end
 		
 	end
 

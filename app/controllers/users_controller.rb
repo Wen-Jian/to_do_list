@@ -12,33 +12,17 @@ class UsersController < ApplicationController
 
 			if params[:login][:account] != "" && params[:login][:password] != "" 
 				
-				@users.each do |u|
+				@user = User.find_by( account: params[:login] [:account])
+				if @user 
 					
-					if u[:account] == params[:login][:account]
-						
-						if u[:password] == params[:login][:password]
+					authenticate(params[:login][:password])
 
-							
-							@userlogined[:user_id] = u[:id]
+					redirect_to user_lists_path(session[:uid])		
+				
+				else
 
-							@userlogined.save
-							redirect_to user_lists_path(u)
-
-
-
-						else
-
-							@error = "Account or password is not correct"
-							render :action => :index							
-
-						end
-
-					else
-
-						@error = "Account or password is not correct"
-						render :action => :index
-
-					end
+					@error = "Account or password is not correct"
+					render :action => :index						
 
 				end
 				
@@ -47,11 +31,22 @@ class UsersController < ApplicationController
 				@error = "Account or password can't be blank!"
 				render :action => :index
 
-
 			end
 
 		else
 
+			@user = User.new(sign_up_params)
+			if @user.save
+
+				redirect_to :action => :index
+
+			else
+
+				render :action => :new
+
+			end
+
+			
 			
 			
 
@@ -59,14 +54,30 @@ class UsersController < ApplicationController
 
 	end
 
+	def new
+
+
+		
+	end
+
 	private
 
-	def login_params
+	def authenticate(password)
 		
-		 params.require(:login).permit(:account, :password)
+		 if password == @user[:password]
+
+		 	session[:account] = @user.account
+		 	session[:uid] = @user.id
+
+		 end
 
 	end
 
+	def sign_up_params
+
+		params.require(:sign_up).permit(:account, :password, :nickname, :sex, :birth)
+		
+	end
 		
 	
 end

@@ -1,4 +1,5 @@
-<div class="container form">
+<%= render :partial => "banner" %>
+<div class="container form register-form">
 <%= form_for :sign_up, :url => users_path, :method => :post do |f| %>
 	<div class = "form-group">
 		<%= f.label :account %>
@@ -22,8 +23,8 @@
 	</div>
 
 	<div>
-		<a href= <%= users_path %>><button>cancel</button></a>
-		<%= f.submit "sign_up" %>
+		<a href= <%= users_path %>><button class="btn btn-primary">cancel</button></a>
+		<%= f.submit "Sign_up", class: "btn btn-primary" %>
 	</div>
 <% end %>	
 </div>

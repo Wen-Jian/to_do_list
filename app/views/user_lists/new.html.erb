@@ -1,12 +1,30 @@
+<div class="container">
+	<% if @list.errors.present? %>
+
+		<ul>
+			
+			<% @list.errors.each do |error, message| %>
+
+				<li>
+					<%= "#{error.capitalize} #{message}" %>
+				</li>
+
+			<% end %>
+
+		</ul>
+
+	<% end %>
+
+</div>
 <div class="container form">
-<%= form_for :list, :url => lists_path, :method => :post do |f| %>
+<%= form_for :list, :url => user_lists_path, :method => :post do |f| %>
 	<div class = "form-group">
 		<%= f.label :title %>
 		<%= f.text_field :title, class: "form-control" %>
 	</div>
 	<div class = "form-group">
 		<%= f.label :due %>
-		<%= f.text_field :due, class: "form-control" %>
+		<%= f.date_select :due, option = {:use_two_digit_numbers => true, :start_year => Date.today.year, :end_year => Date.today.year+5} %>
 	</div>
 	<div class = "form-group">
 		<%= f.label :notes %>
@@ -14,8 +32,8 @@
 	</div>
 
 	<div>
-		<a href= <%= lists_path %>><button>cancel</button></a>
-		<%= f.submit "Creat" %>
+		<a href= <%= user_lists_path %>><button class="btn btn-primary">cancel</button></a>
+		<%= f.submit "Creat", class: "btn btn-primary" %>
 	</div>
 <% end %>	
 </div>
