@@ -1,34 +1,37 @@
 class UserListsController < ApplicationController
 
+	before_action :set_list
+	before_action :authenticate
 	def index
 
-		@time = Time.now
+		
 		
 		set_list
 		@complete_array = []
-		@lists.each do |e|
-			 
-			complete_rate = 0.0
-			e[:status].each do |i|
+		if @lists != nil
+			@lists.each do |e|
+				 
+				complete_rate = 0.0
+				e[:status].each do |i|
 
-				if i == true
-					complete_rate += 1
-					
+					if i == true
+						complete_rate += 1
+						
+					end
+						
 				end
+			
+
+				complete_rate = (complete_rate / (e[:notes].count)) * 100
 					
+				@complete_array.append(complete_rate)
 			end
-
-		complete_rate = (complete_rate / (e[:notes].count)) * 100
-				
-		@complete_array.append(complete_rate)
-
-		@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)
-		
-		
-
 		end
 		
+		
+
 	end
+
 	def new
 
 		@list = List.new
@@ -56,7 +59,8 @@ class UserListsController < ApplicationController
 	end
 	def show
 		
-		session[:select] = params[:id].to_i - 1
+		
+		session[:select] = params[:id].to_i
 		
 		
 		redirect_to :action => :index
@@ -84,7 +88,7 @@ class UserListsController < ApplicationController
 				
 			end	
 			@list.save
-			redirect_to lists_path
+			redirect_to user_lists_path(session[:uid])
 
 		else
 			notes_to_array
@@ -102,10 +106,8 @@ class UserListsController < ApplicationController
 	def destroy
 
 		@list.destroy
-		@select = Selectparam.first
-		@select[:params] = 0
-		@select.save
-		redirect_to lists_path
+		session[:select] = nil
+		redirect_to user_lists_path(session[:uid])
 		
 	end
 
@@ -120,11 +122,13 @@ class UserListsController < ApplicationController
 	
 	def set_list
 
-		if session[:select] != nil
+		@time = Time.now
+		@lists = (List.where(user_id: session[:uid] )).order("due ASC")
+		if session[:select] != nil && (List.find(session[:select].to_i))[:user_id] == session[:uid]
 
-			@lists = (List.where(user_id: session[:uid] )).order("due ASC")
-			@list = @lists[(session[:select].to_i)]			
-
+			@list = List.find(session[:select].to_i)
+			@sum = ((@list.due).year - @time.year) * 400 + ((@list.due).month - @time.month) * 30 + ((@list.due).day - @time.day)			
+			
 		end
 		
 	end
@@ -140,9 +144,15 @@ class UserListsController < ApplicationController
 		e[:status] = Array.new((e[:notes]).count, "false")
 		
 	end
-	def status_params
+	def authenticate
 
-		
+		if session[:uid] == nil || session[:uid] == params[:user_id]
+
+			
+			redirect_to users_path
+
+		end
+
 	end
 end
 

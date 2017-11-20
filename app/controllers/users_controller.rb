@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
 	def index
-		
+		session[:uid] = nil
+		session[:select] = nil
 	end
 
 	def create
