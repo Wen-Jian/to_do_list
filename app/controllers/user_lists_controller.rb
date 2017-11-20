@@ -95,7 +95,7 @@ class UserListsController < ApplicationController
 			
 			if @list.update_attributes(list_params)
 			
-				redirect_to lists_path
+				redirect_to user_lists_path(session[:uid])
 			else
 				render :action => :edit
 			end

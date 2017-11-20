@@ -1,7 +1,7 @@
 
 
 <div class="container form">
-	<%= form_for @list, :url => {:controller => :lists, :action => :update, :method => :patch} do |f| %>
+	<%= form_for @list, :url => user_list_path(session[:uid], session[:select]) do |f| %>
 	<div class="form-group ">
 		<%= f.label :title %>
 		<%= f.text_field :title, class: "form-control" %>	
@@ -18,7 +18,7 @@
 
 	</div>
 	<div class=" form">
-		<a href=<%=lists_path %>><button>cancel</button></a>
+		<a href=<%=user_lists_path(session[:uid]) %>><button>cancel</button></a>
 		
 		<%= f.submit "Update", class:"float-right" %>
 	</div>
