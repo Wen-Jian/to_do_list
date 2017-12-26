@@ -10,7 +10,7 @@
 		</ul>
 	</div>
 	<div class="login-form col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		<%= form_for :login, :url => users_path do |f| %>
+		<%= form_for :login, :url => "/users.json" do |f| %>
 			<div class="form-group form">
 				<%= f.label :account %>
 				<%= f.text_field :account, class: "form-control" %>

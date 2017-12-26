@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
 	def create
 		@users = User.all
-		@userlogined = OnlineAccount.new
 		@error = ""
 		if params[:commit] == "login"
 
@@ -21,8 +20,8 @@ class UsersController < ApplicationController
 					respond_to do |f|
 
 						@lists = List.find_by(user_id: @user.id)
-						f.json { render :json => {@user, @lists}}
-						f.html {redirect_to user_lists_path(session[:uid])}
+						f.json { render :json => {:user => @user, :list => @lists}}
+						f.html { redirect_to user_lists_path(session[:uid])}
 
 					end
 

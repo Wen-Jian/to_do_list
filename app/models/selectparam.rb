@@ -1,2 +1,0 @@
-class Selectparam < ApplicationRecord
-end
