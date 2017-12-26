@@ -18,7 +18,15 @@ class UsersController < ApplicationController
 					
 					authenticate(params[:login][:password])
 
-					redirect_to user_lists_path(session[:uid])		
+					respond_to do |f|
+
+						@lists = List.find_by(user_id: @user.id)
+						f.json { render :json => {@user, @lists}}
+						f.html {redirect_to user_lists_path(session[:uid])}
+
+					end
+
+							
 				
 				else
 
