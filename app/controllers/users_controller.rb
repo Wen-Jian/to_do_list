@@ -20,7 +20,6 @@ class UsersController < ApplicationController
 					respond_to do |f|
 
 						@lists = List.where("user_id = #{@user.id}")
-						d
 						f.json { render :json => {:user => @user, :list => @lists}}
 						f.html { redirect_to user_lists_path(session[:uid])}
 
