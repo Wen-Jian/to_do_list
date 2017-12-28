@@ -30,6 +30,10 @@
 		<%= f.label :notes %>
 		<%= f.text_area :notes, class: "form-control" %>
 	</div>
+	<div class = "form-group">
+		<%= f.hidden_field :user_id, :value => session[:uid] %>
+	
+	</div>
 
 	<div>
 		<a href= <%= user_lists_path %>><button class="btn btn-primary">cancel</button></a>
